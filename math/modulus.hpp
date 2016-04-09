@@ -25,9 +25,9 @@ SOFTWARE.
 #ifndef MODULUS_HPP
 #define MODULUS_HPP
 
-#include <cstddef>
+#include "scalar.hpp"
 
-namespace broome
+namespace Broome
 {
 
 // this adds modulus semantics to integers
@@ -44,11 +44,11 @@ class Modulus
     this->value_ %= this->modulusVal_;
   }
   Modulus() = delete;
-  std::size_t modulusVal_;
+  usize modulusVal_;
   IntegerType value_;
 
 public:
-  Modulus(std::size_t modulus, IntegerType val)
+  Modulus(usize modulus, IntegerType val)
       : modulusVal_{modulus}
       , value_{val}
   {
@@ -198,6 +198,6 @@ public:
   const IntegerType& toInt() const { return this->value_; }
 };
 
-} // end namespace broome
+} // end namespace Broome
 
 #endif // MODULUS_HPP
