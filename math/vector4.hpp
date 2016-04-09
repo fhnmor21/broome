@@ -43,25 +43,15 @@ struct Vector4
     };
     struct
     {
-      Scalar r;
-      Scalar g;
-      Scalar b;
-      Scalar a;
-    };
-    struct
-    {
-      Scalar h;
-      Scalar s;
-      Scalar v;
-      Scalar _a;
-    };
-    struct
-    {
       Scalar pitch;
       Scalar roll;
       Scalar yaw;
       Scalar mag;
     };
+
+    ColourRGBA rgba;
+    ColourHSVA hsva;
+    ColourCMYK cmyk;
 
     Scalar data[4];
 
@@ -71,14 +61,9 @@ struct Vector4
       Vector2 zw;
     };
 
-    struct
-    {
-      Vector2 rg;
-      Vector2 ba;
-    };
-
     Vector3 xyz;
-    Vector3 rgb;
+    ColourRGB rgb;
+    ColourHSV hsv;
   };
 
   static const Vector4 Zero;

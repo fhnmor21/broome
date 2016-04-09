@@ -25,6 +25,7 @@ SOFTWARE.
 #ifndef VECTOR3_HPP
 #define VECTOR3_HPP
 
+#include "colour.hpp"
 #include "vector2.hpp"
 
 namespace Broome
@@ -41,18 +42,6 @@ struct Vector3
     };
     struct
     {
-      Scalar r;
-      Scalar g;
-      Scalar b;
-    };
-    struct
-    {
-      Scalar h;
-      Scalar s;
-      Scalar v;
-    };
-    struct
-    {
       Scalar width;
       Scalar height;
       Scalar depth;
@@ -64,8 +53,10 @@ struct Vector3
       Scalar yaw;
     };
 
-    Scalar data[3];
+    ColourRGB rgb;
+    ColourHSV hsv;
 
+    Scalar data[3];
     Vector2 xy;
   };
 
