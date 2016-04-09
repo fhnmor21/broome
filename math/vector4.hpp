@@ -49,9 +49,36 @@ struct Vector4
       Scalar mag;
     };
 
+    struct
+    {
+      Scalar r;
+      Scalar g;
+      Scalar b;
+      Scalar a;
+    };
+    struct
+    {
+      Scalar C;
+      Scalar M;
+      Scalar Y;
+      Scalar K;
+    };
+    struct
+    {
+      Scalar h;
+      Scalar s;
+      Scalar v;
+    };
+    struct
+    {
+      Vector2 hs;
+      Scalar l;
+    };
+
     ColourRGBA rgba;
     ColourHSVA hsva;
-    ColourCMYK cmyk;
+    ColourHSLA hsla;
+    ColourCMYK CMYK;
 
     Scalar data[4];
 
@@ -64,6 +91,7 @@ struct Vector4
     Vector3 xyz;
     ColourRGB rgb;
     ColourHSV hsv;
+    ColourHSL hsl;
   };
 
   static const Vector4 Zero;
@@ -73,6 +101,8 @@ struct Vector4
   inline Scalar& operator[](usize index) { return data[index]; }
   inline const Scalar& operator[](usize index) const { return data[index]; }
 };
+
+using Colour4 = Vector4;
 
 } // end namespace Broome
 

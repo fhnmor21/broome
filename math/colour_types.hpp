@@ -22,17 +22,53 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef COLOUR_HPP
-#define COLOUR_HPP
+#ifndef COLOUR_TYPES_HPP
+#define COLOUR_TYPES_HPP
 
 #include "scalar.hpp"
 
 namespace Broome
 {
 
-struct Colour8Values
+// blender mode enumaration
+enum eBlendMode
 {
-  enum
+  BLENDMODENONE_,  // no blending: dstRGBA = srcRGBA
+  BLENDMODEALPHA_, // alpha blending:  dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)) &
+                   //                  dstA = srcA + (dstA * (1-srcA))
+  BLENDMODEADD_,   // additive blending: dstRGB = (srcRGB * srcA) + dstRGB & dstA = dstA
+  BLENDMODEMULT_,  // color modulate: dstRGB = srcRGB * dstRGB & dstA = dstA
+};
+
+// colour type enumatration
+enum eColour
+{
+  HTML,
+  RGB8,
+  RGB,
+  RGBA,
+  HSL,
+  HSLA,
+  HSV,
+  HSVA,
+  CMYK,
+};
+
+// holds RGBA data value (in 8 bit format)
+struct Colour8bit
+{
+  union {
+    struct
+    {
+      u8 r;
+      u8 g;
+      u8 b;
+      u8 a;
+    };
+    u32 rgba;
+  };
+
+  enum eColourNames
   {
     /**ABGR(LE) colours table*/
     AliceBlue = 0xF0F8FFFF,
@@ -178,43 +214,10 @@ struct Colour8Values
   };
 };
 
-// blender mode enumaration
-enum eBlendMode
-{
-  BLENDMODENONE_,  // no blending: dstRGBA = srcRGBA
-  BLENDMODEALPHA_, // alpha blending:  dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)) &
-                   //                  dstA = srcA + (dstA * (1-srcA))
-  BLENDMODEADD_,   // additive blending: dstRGB = (srcRGB * srcA) + dstRGB & dstA = dstA
-  BLENDMODEMULT_,  // color modulate: dstRGB = srcRGB * dstRGB & dstA = dstA
-};
-
-// colour type enumatration
-enum eColour
-{
-  HTML,
-  RGB8,
-  RGB,
-  RGBA,
-  HSL,
-  HSLA,
-  HSV,
-  HSVA,
-  CMYK,
-};
-
 // holda hex data value (html equivalent)
 struct ColourHtml
 {
   char hexVal[8];
-};
-
-// holds RGBA data value (in 8 bit format)
-struct Colour8bit
-{
-  u8 r;
-  u8 g;
-  u8 b;
-  u8 a;
 };
 
 // holds RGB data value
@@ -277,26 +280,6 @@ struct ColourCMYK
   Scalar k;
 };
 
-// conversion from and to different colour formats
-void Html2Rgb(const ColourHtml& in, ColourRGB& out);
-void Rgb2Html(const ColourRGB& in, ColourHtml& out);
-
-void Rgb2Hsv(const ColourRGB& in, ColourHSV& out);
-void Rgb2Hsl(const ColourRGB& in, ColourHSL& out);
-void Rgb2Cmyk(const ColourRGB& in, ColourCMYK& out);
-
-void Hsl2Rgb(const ColourHSL& in, ColourRGB& out);
-void Hsl2Hsv(const ColourHSL& in, ColourHSV& out);
-void Hsl2Cmyk(const ColourHSL& in, ColourCMYK& out);
-
-void Hsv2Rgb(const ColourHSV& in, ColourRGB& out);
-void Hsv2Hsl(const ColourHSV& in, ColourHSL& out);
-void Hsv2Cmyk(const ColourHSV& in, ColourCMYK& out);
-
-void Cmyk2Rgb(const ColourCMYK& in, ColourRGB& out);
-void Cmyk2Hsl(const ColourCMYK& in, ColourHSL& out);
-void Cmyk2Hsv(const ColourCMYK& in, ColourHSV& out);
-
 } // end namespace Broome
 
-#endif // COLOUR_HPP
+#endif // COLOUR_TYPES_HPP

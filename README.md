@@ -2,7 +2,7 @@
 
 2D and 3D games math utils.
 
-Based on source code and ideas fro the following sources:
+Based on source code and ideas from the following sources:
 * https://github.com/Kazade/kazmath
 * https://github.com/gingerBill/Dunjun
 * https://github.com/oxygine/oxygine-framework

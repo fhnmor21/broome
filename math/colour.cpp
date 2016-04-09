@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "colour.hpp"
+#include "colour_functions.hpp"
 #include <algorithm>
 
 namespace Broome
@@ -49,7 +49,7 @@ inline u8 hexChar2Val(const char* ch)
   return val;
 }
 
-void Html2Rgb(const ColourHtml& in, ColourRGB& out)
+void Html2Rgb(const ColourHtml& in, Colour3& out)
 {
   u32 rgb = 0;
   for(u8 i = 0; i < 8; i++)
@@ -62,7 +62,7 @@ void Html2Rgb(const ColourHtml& in, ColourRGB& out)
   out.r = static_cast< Scalar >(0xff & (rgb >> 16));
 }
 
-void Rgb2Html(const ColourRGB& in, ColourHtml& out)
+void Rgb2Html(const Colour3& in, ColourHtml& out)
 {
   const char hex[16] = {
       '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
@@ -71,24 +71,40 @@ void Rgb2Html(const ColourRGB& in, ColourHtml& out)
   u8 g = (static_cast< u8 >(in.g * 255) % 256);
   u8 b = (static_cast< u8 >(in.b * 255) % 256);
 
-  u8 rLo = r & 0x0f;
-  u8 rHi = (r >> 4) & 0x0f;
-  u8 gLo = g & 0x0f;
-  u8 gHi = (g >> 4) & 0x0f;
-  u8 bLo = b & 0x0f;
-  u8 bHi = (b >> 4) & 0x0f;
+  u8 r_Lo = r & 0x0f;
+  u8 r_Hi = (r >> 4) & 0x0f;
+  u8 g_Lo = g & 0x0f;
+  u8 g_Hi = (g >> 4) & 0x0f;
+  u8 b_Lo = b & 0x0f;
+  u8 b_Hi = (b >> 4) & 0x0f;
 
   out.hexVal[7] = '\0';
-  out.hexVal[6] = hex[rHi];
-  out.hexVal[5] = hex[rLo];
-  out.hexVal[4] = hex[gHi];
-  out.hexVal[3] = hex[gLo];
-  out.hexVal[2] = hex[bHi];
-  out.hexVal[1] = hex[bLo];
+  out.hexVal[6] = hex[r_Hi];
+  out.hexVal[5] = hex[r_Lo];
+  out.hexVal[4] = hex[g_Hi];
+  out.hexVal[3] = hex[g_Lo];
+  out.hexVal[2] = hex[b_Hi];
+  out.hexVal[1] = hex[b_Lo];
   out.hexVal[0] = '#';
 }
 
-Scalar calcHueFromRgb(const ColourRGB& in, const Scalar& cMax, const Scalar& cMin)
+void C8bit2Rgba(const Colour8bit& in, Colour4& out)
+{
+  out.r = static_cast< Scalar >(in.r / 255);
+  out.g = static_cast< Scalar >(in.g / 255);
+  out.b = static_cast< Scalar >(in.b / 255);
+  out.a = static_cast< Scalar >(in.a / 255);
+}
+
+void Rgba2C8bit(const Colour4& in, Colour8bit& out)
+{
+  out.r = (static_cast< u8 >(in.r * 255) % 256);
+  out.g = (static_cast< u8 >(in.g * 255) % 256);
+  out.b = (static_cast< u8 >(in.b * 255) % 256);
+  out.a = (static_cast< u8 >(in.a * 255) % 256);
+}
+
+Scalar calcHueFromRgb(const Colour3& in, const Scalar& cMax, const Scalar& cMin)
 {
   Scalar delta = cMax - cMin;
   Scalar h = 0.0f;
@@ -117,7 +133,7 @@ Scalar calcHueFromRgb(const ColourRGB& in, const Scalar& cMax, const Scalar& cMi
   return h;
 }
 
-void Rgb2Hsv(const ColourRGB& in, ColourHSV& out)
+void Rgb2Hsv(const Colour3& in, Colour3& out)
 {
   Scalar cMax = std::max(in.r, std::max(in.g, in.b));
   Scalar cMin = std::min(in.r, std::min(in.g, in.b));
@@ -144,7 +160,7 @@ void Rgb2Hsv(const ColourRGB& in, ColourHSV& out)
   out.v = cMax;
 }
 
-void Rgb2Hsl(const ColourRGB& in, ColourHSL& out)
+void Rgb2Hsl(const Colour3& in, Colour3& out)
 {
   Scalar cMax = std::max(in.r, std::max(in.g, in.b));
   Scalar cMin = std::min(in.r, std::min(in.g, in.b));
@@ -171,16 +187,16 @@ void Rgb2Hsl(const ColourRGB& in, ColourHSL& out)
   out.h = calcHueFromRgb(in, cMax, cMin);
 }
 
-void Rgb2Cmyk(const ColourRGB& in, ColourCMYK& out)
+void Rgb2Cmyk(const Colour3& in, Colour4& out)
 {
-  out.k = 1 - max(in.r, max(in.g, in.b));
-  out.c = (1 - in.r - out.k) / (1 - out.k);
-  out.m = (1 - in.g - out.k) / (1 - out.k);
-  out.y = (1 - in.b - out.k) / (1 - out.k);
+  out.K = 1 - max(in.r, max(in.g, in.b));
+  out.C = (1 - in.r - out.K) / (1 - out.K);
+  out.M = (1 - in.g - out.K) / (1 - out.K);
+  out.Y = (1 - in.b - out.K) / (1 - out.K);
 }
 
 inline void
-calcRgbFromHue(const Scalar& h, const Scalar& c, const Scalar& x, const Scalar& m, ColourRGB& out)
+calcRgbFromHue(const Scalar& h, const Scalar& c, const Scalar& x, const Scalar& m, Colour3& out)
 {
   out.r = 0.0f;
   out.g = 0.0f;
@@ -224,7 +240,7 @@ calcRgbFromHue(const Scalar& h, const Scalar& c, const Scalar& x, const Scalar& 
   }
 }
 
-void Hsl2Rgb(const ColourHSL& in, ColourRGB& out)
+void Hsl2Rgb(const Colour3& in, Colour3& out)
 {
   Scalar h = fmod(6.0f + in.h * 6.0f, 6.0f);
   Scalar c = in.s * (1 - abs(2 * in.l - 1));
@@ -234,7 +250,7 @@ void Hsl2Rgb(const ColourHSL& in, ColourRGB& out)
   calcRgbFromHue(h, c, x, m, out);
 }
 
-void Hsv2Rgb(const ColourHSV& in, ColourRGB& out)
+void Hsv2Rgb(const Colour3& in, Colour3& out)
 {
   Scalar h = fmod(6.0f + in.h * 6.0f, 6.0f);
   Scalar c = in.v * in.s;
@@ -244,14 +260,14 @@ void Hsv2Rgb(const ColourHSV& in, ColourRGB& out)
   calcRgbFromHue(h, c, x, m, out);
 }
 
-void Cmyk2Rgb(const ColourCMYK& in, ColourRGB& out)
+void Cmyk2Rgb(const Colour4& in, Colour3& out)
 {
-  out.r = (1 - in.c) * (1 - in.k);
-  out.g = (1 - in.m) * (1 - in.k);
-  out.b = (1 - in.y) * (1 - in.k);
+  out.r = (1 - in.C) * (1 - in.K);
+  out.g = (1 - in.M) * (1 - in.K);
+  out.b = (1 - in.Y) * (1 - in.K);
 }
 
-void Hsl2Hsv(const ColourHSL& in, ColourHSV& out)
+void Hsl2Hsv(const Colour3& in, Colour3& out)
 {
   // Saturation is very different between the two color spaces
   // If (2-sat)*val < 1 set it to sat*val/((2-sat)*val)
@@ -276,7 +292,7 @@ void Hsl2Hsv(const ColourHSL& in, ColourHSV& out)
   out.s = (2 * s2) / (l2 + s2);
 }
 
-void Hsv2Hsl(const ColourHSV& in, ColourHSL& out)
+void Hsv2Hsl(const Colour3& in, Colour3& out)
 {
   Scalar cMax = in.v;
   Scalar cMin = in.v - in.s * in.v;
@@ -303,30 +319,30 @@ void Hsv2Hsl(const ColourHSV& in, ColourHSL& out)
   }
 }
 
-void Hsl2Cmyk(const ColourHSL& in, ColourCMYK& out)
+void Hsl2Cmyk(const Colour3& in, Colour4& out)
 {
-  ColourRGB tmp;
+  Colour3 tmp;
   Hsl2Rgb(in, tmp);
   Rgb2Cmyk(tmp, out);
 }
 
-void Hsv2Cmyk(const ColourHSV& in, ColourCMYK& out)
+void Hsv2Cmyk(const Colour3& in, Colour4& out)
 {
-  ColourRGB tmp;
+  Colour3 tmp;
   Hsv2Rgb(in, tmp);
   Rgb2Cmyk(tmp, out);
 }
 
-void Cmyk2Hsl(const ColourCMYK& in, ColourHSL& out)
+void Cmyk2Hsl(const Colour4& in, Colour3& out)
 {
-  ColourRGB tmp;
+  Colour3 tmp;
   Cmyk2Rgb(in, tmp);
   Rgb2Hsl(tmp, out);
 }
 
-void Cmyk2Hsv(const ColourCMYK& in, ColourHSV& out)
+void Cmyk2Hsv(const Colour4& in, Colour3& out)
 {
-  ColourRGB tmp;
+  Colour3 tmp;
   Cmyk2Rgb(in, tmp);
   Rgb2Hsv(tmp, out);
 }

@@ -22,73 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef VECTOR3_HPP
-#define VECTOR3_HPP
+#ifndef COLOUR_FUNCTIONS_HPP
+#define COLOUR_FUNCTIONS_HPP
 
-#include "colour.hpp"
-#include "vector2.hpp"
+#include "vector4.hpp"
 
 namespace Broome
 {
 
-struct Vector3
-{
-  union {
-    struct
-    {
-      Scalar x;
-      Scalar y;
-      Scalar z;
-    };
-    struct
-    {
-      Scalar width;
-      Scalar height;
-      Scalar depth;
-    };
-    struct
-    {
-      Scalar pitch;
-      Scalar roll;
-      Scalar yaw;
-    };
+// conversion from and to different colour formats
+void Html2Rgb(const ColourHtml& in, Colour3& out);
+void Rgb2Html(const Colour3& in, ColourHtml& out);
 
-    struct
-    {
-      Scalar r;
-      Scalar g;
-      Scalar b;
-    };
-    struct
-    {
-      Scalar h;
-      Scalar s;
-      Scalar v;
-    };
-    struct
-    {
-      Vector2 hs;
-      Scalar l;
-    };
+void C8bit2Rgba(const Colour8bit& in, Colour4& out);
+void Rgba2C8bit(const Colour4& in, Colour8bit& out);
 
-    ColourRGB rgb;
-    ColourHSV hsv;
-    ColourHSL hsl;
+void Rgb2Hsv(const Colour3& in, Colour3& out);
+void Rgb2Hsl(const Colour3& in, Colour3& out);
+void Rgb2Cmyk(const Colour3& in, Colour4& out);
 
-    Scalar data[3];
-    Vector2 xy;
-  };
+void Hsl2Rgb(const Colour3& in, Colour3& out);
+void Hsl2Hsv(const Colour3& in, Colour3& out);
+void Hsl2Cmyk(const Colour3& in, Colour4& out);
 
-  static const Vector3 Zero;
-  static const Vector3 Half;
-  static const Vector3 One;
+void Hsv2Rgb(const Colour3& in, Colour3& out);
+void Hsv2Hsl(const Colour3& in, Colour3& out);
+void Hsv2Cmyk(const Colour3& in, Colour4& out);
 
-  inline Scalar& operator[](usize index) { return data[index]; }
-  inline const Scalar& operator[](usize index) const { return data[index]; }
-};
-
-using Colour3 = Vector3;
+void Cmyk2Rgb(const Colour4& in, Colour3& out);
+void Cmyk2Hsl(const Colour4& in, Colour3& out);
+void Cmyk2Hsv(const Colour4& in, Colour3& out);
 
 } // end namespace Broome
 
-#endif // VECTOR3_HPP
+#endif // COLOUR_FUNCTIONS_HPP
