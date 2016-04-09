@@ -25,7 +25,7 @@ SOFTWARE.
 #ifndef VECTOR3_HPP
 #define VECTOR3_HPP
 
-#include "colour.hpp"
+#include "colour_types.hpp"
 #include "vector2.hpp"
 
 namespace Broome
@@ -88,6 +88,8 @@ struct Vector3
 };
 
 using Colour3 = Vector3;
+using Dimension3 = Vector3;
+using Rotation3 = Vector3;
 
 } // end namespace Broome
 

@@ -69,6 +69,9 @@ struct Vector2
   inline const Scalar& operator[](usize index) const { return data[index]; }
 };
 
+using Dimension2 = Vector2;
+using Rotation2 = Vector2;
+
 } // end namespace Broome
 
 #endif // VECTOR2_HPP
