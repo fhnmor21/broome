@@ -25,17 +25,17 @@ connection with Dunjun or the use or other dealings in Dunjun.
 NOTE: This file was modified to fit the Broome project
 */
 
-#include "vector2.hpp"
+#include "vector3.hpp"
 #include "functions.hpp"
 
 namespace Broome
 {
 
-const Vector2 Vector2::Zero = {0, 0};
+const Vector3 Vector3::Zero = {0, 0, 0};
 
-bool operator==(const Vector2& a, const Vector2& b)
+bool operator==(const Vector3& a, const Vector3& b)
 {
-  for(usize i = 0; i < 2; i++)
+  for(usize i = 0; i < 3; i++)
   {
     if(a[i] != b[i])
       return false;
@@ -44,76 +44,92 @@ bool operator==(const Vector2& a, const Vector2& b)
   return true;
 }
 
-bool operator!=(const Vector2& a, const Vector2& b) { return !operator==(a, b); }
+bool operator!=(const Vector3& a, const Vector3& b) { return !operator==(a, b); }
 
-Vector2 operator-(const Vector2& a) { return {-a.x, -a.y}; }
+Vector3 operator-(const Vector3& a) { return {-a.x, -a.y, -a.z}; }
 
-Vector2 operator+(const Vector2& a, const Vector2& b) { return {a.x + b.x, a.y + b.y}; }
+Vector3 operator+(const Vector3& a, const Vector3& b) { return {a.x + b.x, a.y + b.y, a.z + b.z}; }
 
-Vector2 operator-(const Vector2& a, const Vector2& b) { return {a.x - b.x, a.y - b.y}; }
+Vector3 operator-(const Vector3& a, const Vector3& b) { return {a.x - b.x, a.y - b.y, a.z - b.z}; }
 
-Vector2 operator*(const Vector2& a, Scalar scalar) { return {scalar * a.x, scalar * a.y}; }
+Vector3 operator*(const Vector3& a, Scalar scalar)
+{
+  return {scalar * a.x, scalar * a.y, scalar * a.z};
+}
 
-Vector2 operator/(const Vector2& a, Scalar scalar) { return {a.x / scalar, a.y / scalar}; }
+Vector3 operator/(const Vector3& a, Scalar scalar)
+{
+  return {a.x / scalar, a.y / scalar, a.z / scalar};
+}
 
 // Hadamard Product
-Vector2 operator*(const Vector2& a, const Vector2& b)
+Vector3 operator*(const Vector3& a, const Vector3& b)
 {
-  Vector2 result;
-  for(usize i = 0; i < 2; i++)
+  Vector3 result;
+  for(usize i = 0; i < 3; i++)
     result[i] = a[i] * b[i];
   return result;
 }
 
 // Hadamard Product
-Vector2 operator/(const Vector2& a, const Vector2& b)
+Vector3 operator/(const Vector3& a, const Vector3& b)
 {
-  Vector2 result;
-  for(usize i = 0; i < 2; i++)
+  Vector3 result;
+  for(usize i = 0; i < 3; i++)
     result[i] = a[i] / b[i];
   return result;
 }
 
-Vector2& operator+=(Vector2& a, const Vector2& b)
+Vector3& operator+=(Vector3& a, const Vector3& b)
 {
   a.x += b.x;
   a.y += b.y;
+  a.z += b.z;
 
   return a;
 }
 
-Vector2& operator-=(Vector2& a, const Vector2& b)
+Vector3& operator-=(Vector3& a, const Vector3& b)
 {
   a.x -= b.x;
   a.y -= b.y;
+  a.z -= b.z;
 
   return a;
 }
 
-Vector2& operator*=(Vector2& a, Scalar scalar)
+Vector3& operator*=(Vector3& a, Scalar scalar)
 {
   a.x *= scalar;
   a.y *= scalar;
+  a.z *= scalar;
 
   return a;
 }
 
-Vector2& operator/=(Vector2& a, Scalar scalar)
+Vector3& operator/=(Vector3& a, Scalar scalar)
 {
   a.x /= scalar;
   a.y /= scalar;
+  a.z /= scalar;
 
   return a;
 }
 
-Scalar dot(const Vector2& a, const Vector2& b) { return a.x * b.x + a.y * b.y; }
+Scalar dot(const Vector3& a, const Vector3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 
-Scalar cross(const Vector2& a, const Vector2& b) { return a.x * b.y - b.x * a.y; }
+Vector3 cross(const Vector3& a, const Vector3& b)
+{
+  return {
+      a.y * b.z - b.y * a.z, // x
+      a.z * b.x - b.z * a.x, // y
+      a.x * b.y - b.x * a.y  // z
+  };
+}
 
-Scalar lengthSq(const Vector2& a) { return dot(a, a); }
+Scalar lengthSq(const Vector3& a) { return dot(a, a); }
 
-Scalar length(const Vector2& a) { return std::sqrt(lengthSq(a)); }
+Scalar length(const Vector3& a) { return std::sqrt(lengthSq(a)); }
 
-Vector2 normalize(const Vector2& a) { return a * (1.0f / length(a)); }
-
+Vector3 normalize(const Vector3& a) { return a * (1.0f / length(a)); }
 } // namespace Broome
