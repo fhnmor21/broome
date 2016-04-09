@@ -11,4 +11,6 @@ Base on source code and ideas fro the following sources:
 * https://github.com/cocos2d/cocos2d-x
 * https://github.com/GarageGames/Torque2D
 
-This project is released under the MIT license.
+Files from this project is released under the MIT license.
+
+Files from other projects hold their original license.
