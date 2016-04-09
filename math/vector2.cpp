@@ -31,7 +31,9 @@ NOTE: This file was modified to fit the Broome project
 namespace Broome
 {
 
-const Vector2 Vector2::Zero = {0, 0};
+const Vector2 Vector2::Zero = {0.0, 0.0};
+const Vector2 Vector2::Half = {0.5, 0.5};
+const Vector2 Vector2::Zero = {1.0, 1.0};
 
 bool operator==(const Vector2& a, const Vector2& b)
 {

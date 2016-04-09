@@ -22,56 +22,68 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef VECTOR3_HPP
-#define VECTOR3_HPP
+#ifndef VECTOR4_HPP
+#define VECTOR4_HPP
 
-#include "vector2.hpp"
+#include "vector3.hpp"
 
 namespace Broome
 {
 
-struct Vector3
+struct Vector4
 {
   union {
+
     struct
     {
       Scalar x;
       Scalar y;
       Scalar z;
+      Scalar w;
     };
     struct
     {
       Scalar r;
       Scalar g;
       Scalar b;
+      Scalar a;
     };
     struct
     {
       Scalar h;
       Scalar s;
       Scalar v;
-    };
-    struct
-    {
-      Scalar width;
-      Scalar height;
-      Scalar depth;
+      Scalar _a;
     };
     struct
     {
       Scalar pitch;
       Scalar roll;
       Scalar yaw;
+      Scalar mag;
     };
 
-    Scalar data[3];
+    Scalar data[4];
 
-    Vector2 xy;
+    struct
+    {
+      Vector2 xy;
+      Vector2 zw;
+    };
+
+    struct
+    {
+      Vector2 rg;
+      Vector2 ba;
+    };
+
+    Vector3 xyz;
+    Vector3 rgb;
   };
 
-  static const Vector3 Zero;
-  static const Vector3 Half;
-  static const Vector3 One;
+  static const Vector4 Zero;
+  static const Vector4 Half;
+  static const Vector4 One;
 
   inline Scalar& operator[](usize index) { return data[index]; }
   inline const Scalar& operator[](usize index) const { return data[index]; }
@@ -79,4 +91,4 @@ struct Vector3
 
 } // end namespace Broome
 
-#endif // VECTOR3_HPP
+#endif // VECTOR4_HPP

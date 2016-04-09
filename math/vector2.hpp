@@ -62,6 +62,8 @@ struct Vector2
   };
 
   static const Vector2 Zero;
+  static const Vector2 Half;
+  static const Vector2 One;
 
   inline Scalar& operator[](usize index) { return data[index]; }
   inline const Scalar& operator[](usize index) const { return data[index]; }
