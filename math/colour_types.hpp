@@ -30,6 +30,8 @@ SOFTWARE.
 namespace Broome
 {
 
+using BlendingMode = u16;
+
 // blender mode enumaration
 enum eBlendMode
 {
@@ -66,6 +68,7 @@ struct Colour8bit
       u8 a;
     };
     u32 rgba;
+    u8 data[4];
   };
 
   enum eColourNames
@@ -217,7 +220,16 @@ struct Colour8bit
 // holda hex data value (html equivalent)
 struct ColourHtml
 {
-  char hexVal[8];
+  union {
+    char hexVal[8];
+    struct
+    {
+      char ox[2];
+      char rr[2];
+      char gg[2];
+      char bb[2];
+    };
+  };
 };
 
 // holds RGB data value

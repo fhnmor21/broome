@@ -65,6 +65,12 @@ struct Vector2
   static const Vector2 Half;
   static const Vector2 One;
 
+  static const Vector2 CENTER_;
+  static const Vector2 TOPLEFT_;
+  static const Vector2 TOPRIGHT_;
+  static const Vector2 BOTLEFT_;
+  static const Vector2 BOTRIGHT_;
+
   inline Scalar& operator[](usize index) { return data[index]; }
   inline const Scalar& operator[](usize index) const { return data[index]; }
 };

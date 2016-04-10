@@ -33,7 +33,13 @@ namespace Broome
 
 const Vector2 Vector2::Zero = {0.0, 0.0};
 const Vector2 Vector2::Half = {0.5, 0.5};
-const Vector2 Vector2::Zero = {1.0, 1.0};
+const Vector2 Vector2::One = {1.0, 1.0};
+
+const Vector2 Vector2::CENTER_ = {0.5f, 0.5f};
+const Vector2 Vector2::TOPLEFT_ = {0.0f, 0.0f};
+const Vector2 Vector2::TOPRIGHT_ = {1.0f, 0.0f};
+const Vector2 Vector2::BOTLEFT_ = {0.0f, 1.0f};
+const Vector2 Vector2::BOTRIGHT_ = {1.0f, 1.0f};
 
 bool operator==(const Vector2& a, const Vector2& b)
 {

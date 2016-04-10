@@ -198,6 +198,11 @@ public:
   const IntegerType& toInt() const { return this->value_; }
 };
 
+using m8 = Modulus< i8 >;
+using m16 = Modulus< i16 >;
+using m32 = Modulus< i32 >;
+using m64 = Modulus< i64 >;
+
 } // end namespace Broome
 
 #endif // MODULUS_HPP
