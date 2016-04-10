@@ -4,7 +4,6 @@
 [X] Vector2
 [X] Vector3
 [X] Vector4
-[X] Modulus
 [X] Colour
 [ ] Functions
 [ ] Matrix4
