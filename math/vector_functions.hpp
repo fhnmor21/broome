@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef FUNCTIONS_HPP
-#define FUNCTIONS_HPP
+#ifndef VECTOR_FUNCTIONS_HPP
+#define VECTOR_FUNCTIONS_HPP
 
 #include <cmath>
 
@@ -32,4 +32,4 @@ namespace Broome
 
 } // end namespace Broome
 
-#endif // FUNCTIONS_HPP
+#endif // VECTOR_FUNCTIONS_HPP
