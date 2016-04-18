@@ -32,6 +32,10 @@ namespace Broome
 
 struct Vector2
 {
+  enum
+  {
+    eAxis = 2,
+  };
   union {
     struct
     {
@@ -58,7 +62,7 @@ struct Vector2
       Scalar roll;
       Scalar pitch;
     };
-    Scalar data[2];
+    Scalar data[eAxis];
   };
 
   static const Vector2 Zero;

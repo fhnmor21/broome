@@ -6,6 +6,7 @@
 [X] Vector4
 [X] Colour
 [ ] Functions
+[ ] Plane
 [ ] Matrix4
 [ ] Matrix3
 [ ] AffineTransform

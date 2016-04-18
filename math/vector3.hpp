@@ -33,6 +33,10 @@ namespace Broome
 
 struct Vector3
 {
+  enum
+  {
+    eAxis = 3,
+  };
   union {
     struct
     {
@@ -75,7 +79,7 @@ struct Vector3
     ColourHSV hsv;
     ColourHSL hsl;
 
-    Scalar data[3];
+    Scalar data[eAxis];
     Vector2 xy;
   };
 

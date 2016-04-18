@@ -57,6 +57,10 @@ using Scalar = f32;
 #endif
 #endif
 
+using Radian = f32;
+using Degree = f32;
+using SemiuCirc = f32; // 0.0 - 1.0 == half circle
+
 } // end namespace Broome
 
 #endif // SCALAR_HPP

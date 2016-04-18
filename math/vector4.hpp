@@ -32,6 +32,10 @@ namespace Broome
 
 struct Vector4
 {
+  enum
+  {
+    eAxis = 4,
+  };
   union {
 
     struct
@@ -80,7 +84,7 @@ struct Vector4
     ColourHSLA hsla;
     ColourCMYK CMYK;
 
-    Scalar data[4];
+    Scalar data[eAxis];
 
     struct
     {
