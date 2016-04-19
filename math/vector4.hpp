@@ -106,6 +106,22 @@ struct Vector4
   inline const Scalar& operator[](usize index) const { return data[index]; }
 };
 
+bool operator==(const Vector4& a, const Vector4& b);
+bool operator!=(const Vector4& a, const Vector4& b);
+Vector4 operator-(const Vector4& a);
+Vector4 operator+(const Vector4& a, const Vector4& b);
+Vector4 operator-(const Vector4& a, const Vector4& b);
+Vector4 operator*(const Vector4& a, f32 scalar);
+Vector4 operator*(const Vector4& a, const Vector4& b);
+Vector4 operator/(const Vector4& a, const Vector4& b);
+Vector4 operator/(const Vector4& a, f32 scalar);
+Vector4& operator+=(Vector4& a, const Vector4& b);
+Vector4& operator-=(Vector4& a, const Vector4& b);
+Vector4& operator*=(Vector4& a, f32 scalar);
+Vector4& operator/=(Vector4& a, f32 scalar);
+
+inline Vector4 operator*(f32 scalar, const Vector4& vector) { return vector * scalar; }
+
 using Colour4 = Vector4;
 
 } // end namespace Broome

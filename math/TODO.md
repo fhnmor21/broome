@@ -1,11 +1,13 @@
 # TODO:
 
-[X] Scalar
-[X] Vector2
-[X] Vector3
-[X] Vector4
-[X] Colour
-[ ] Functions
+[x] Scalar
+[x] Vector2
+[x] Vector3
+[x] Vector4
+[x] Colour
+[x] Scalar Functions
+[ ] Vector Functions
+[ ] Matrix Functions
 [ ] Plane
 [ ] Matrix4
 [ ] Matrix3

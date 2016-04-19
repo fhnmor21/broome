@@ -37,9 +37,70 @@ namespace Broome
 {
 
 // Trigonometric
-Scalar sin(const Radian& theta) { return std::sin(theta); }
-Scalar cos(const Radian& theta) { return std::cos(theta); }
-Scalar tan(const Radian& theta) { return std::tan(theta); }
+Scalar sin(Radian theta);
+Scalar cos(Radian theta);
+Scalar tan(Radian theta);
+
+Radian asin(Scalar a);
+Radian acos(Scalar a);
+Radian atan(Scalar a);
+Radian atan2(Scalar y, Scalar x);
+
+// Hyperbolic
+Scalar sinh(Scalar x);
+Scalar cosh(Scalar x);
+Scalar tanh(Scalar x);
+
+Scalar asinh(Scalar x);
+Scalar acosh(Scalar x);
+Scalar atanh(Scalar x);
+
+// Power
+Scalar pow(Scalar x, Scalar y);
+Scalar sqrt(Scalar x);
+Scalar cbrt(Scalar x);
+Scalar hypotenuse(Scalar x, Scalar y);
+
+f32 fastInvSqrt(f32 x);
+
+// Exponential and Logarithm
+Scalar exp(Scalar x);  // e^x
+Scalar exp2(Scalar x); // 2^x
+Scalar ln(Scalar x);
+Scalar ln1p(Scalar x); // ln(1 + x)
+Scalar log2(Scalar x);
+Scalar log10(Scalar x);
+Scalar logBase(Scalar x, Scalar base);
+
+// Sign
+f32 abs(f32 x);
+i8 abs(i8 x);
+i16 abs(i16 x);
+i32 abs(i32 x);
+i64 abs(i64 x);
+
+i32 sign(i32 x);
+i64 sign(i64 x);
+f32 sign(f32 x);
+
+// Rounding
+Scalar ceil(Scalar x);
+Scalar floor(Scalar x);
+Scalar mod(Scalar x, Scalar y);
+
+// TODO: 64 bit version
+f32 truncate(f32 x);
+// TODO: 64 bit version
+f32 round(f32 x);
+
+// ----------------
+// Implementation
+// ----------------
+
+// Trigonometric
+Scalar sin(Radian theta) { return std::sin(theta); }
+Scalar cos(Radian theta) { return std::cos(theta); }
+Scalar tan(Radian theta) { return std::tan(theta); }
 
 Radian asin(Scalar a) { return Radian(std::asin(a)); }
 Radian acos(Scalar a) { return Radian(std::acos(a)); }
@@ -174,6 +235,7 @@ Scalar mod(Scalar x, Scalar y)
   return std::copysign(result, x);
 }
 
+// TODO: 64 bit version
 f32 truncate(f32 x)
 {
   u32 i = *(reinterpret_cast< u32* >(&x));
@@ -186,6 +248,7 @@ f32 truncate(f32 x)
   return *(reinterpret_cast< f32* >(&i));
 }
 
+// TODO: 64 bit version
 f32 round(f32 x)
 {
   std::fenv_t saveEnv;

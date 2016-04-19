@@ -26,7 +26,7 @@ NOTE: This file was modified to fit the Broome project
 */
 
 #include "vector2.hpp"
-#include "functions.hpp"
+#include "scalar_functions.hpp"
 
 namespace Broome
 {
@@ -113,15 +113,5 @@ Vector2& operator/=(Vector2& a, Scalar scalar)
 
   return a;
 }
-
-Scalar dot(const Vector2& a, const Vector2& b) { return a.x * b.x + a.y * b.y; }
-
-Scalar cross(const Vector2& a, const Vector2& b) { return a.x * b.y - b.x * a.y; }
-
-Scalar lengthSq(const Vector2& a) { return dot(a, a); }
-
-Scalar length(const Vector2& a) { return std::sqrt(lengthSq(a)); }
-
-Vector2 normalize(const Vector2& a) { return a * (1.0f / length(a)); }
 
 } // namespace Broome

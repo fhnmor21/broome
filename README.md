@@ -11,3 +11,5 @@ Based on source code and ideas from the following sources:
 Files from this project is released under the MIT license.
 
 Files from other projects hold their original license.
+
+This project is named after Broome Bridge in Dublin where Hamilton had the Quaternion Epiphany.

@@ -27,6 +27,7 @@ SOFTWARE.
 
 #include <cmath>
 
+#include "scalar_functions.hpp"
 #include "vector4.hpp"
 
 namespace Broome
@@ -44,7 +45,7 @@ Vector3 cross(const Vector3& a, const Vector3& b)
 }
 
 template < typename VectorType >
-Scalar dot(const VectorType a, const VectorType b)
+Scalar dot(const VectorType& a, const VectorType& b)
 {
   Scalar result(0.0);
   const unsigned short numAxis = VectorType::eAxis;
@@ -86,78 +87,122 @@ VectorType lerp(const VectorType a, const VectorType b, Scalar t)
   return result;
 }
 
+/**
+ * Returns the distance between the two points
+ */
+Scalar DistanceBetween(const Vector2& v1, const Vector2& v2)
+{
+  Vector2 diff;
+  diff = v2 - v1;
+  return abs(length(diff));
+}
+
+/**
+ * Returns the point mid-way between two others
+ */
+Vector2 MidPointBetween(const Vector2& v1, const Vector2& v2)
+{
+  Vector2 rVal;
+  Vector2 sum;
+  sum = v1 + v2;
+  rVal.x = sum.x / 2.0f;
+  rVal.y = sum.y / 2.0f;
+
+  return rVal;
+}
+
+/**
+ * 	Returns the angle in degrees between the two vectors
+ */
+Scalar RadiansBetween(const Vector2& v1, const Vector2& v2)
+{
+  if(v1 == v2)
+  {
+    return 0.0;
+  }
+
+  Vector2 t1;
+  Vector2 t2;
+  t1 = normalize(v1);
+  t2 = normalize(v2);
+
+  Scalar c = cross(t1, t2);
+  Scalar d = dot(t1, t2);
+
+  if(d > 1.0)
+  {
+    d = 1.0;
+  }
+  if(d < -1.0)
+  {
+    d = -1.0;
+  }
+
+  return atan2(c, d);
+}
+
+/**
+ * Rotates the point anticlockwise around a center
+ * by an amount of degrees.
+ *
+ * Code ported from Irrlicht: http://irrlicht.sourceforge.net/
+ */
+Vector2 RotateBy(const Radian radians, const Vector2& in, const Vector2& center)
+{
+  Vector2 rVec;
+  const Scalar cs = cos(radians);
+  const Scalar sn = sin(radians);
+
+  rVec.x = in.x - center.x;
+  rVec.y = in.y - center.y;
+
+  rVec.x = (rVec.x * cs - rVec.y * sn) + center.x;
+  rVec.y = (rVec.x * sn + rVec.y * cs) + center.y;
+
+  return rVec;
+}
+
 // /**
-//  * Rotates the point anticlockwise around a center
-//  * by an amount of degrees.
+//  * Builds a direction vector from input vector.
+//  * Input vector is assumed to be rotation vector composed from 3 Euler angle rotations, in
+//  degrees.
+//  * The forwards vector will be rotated by the input vector
 //  *
 //  * Code ported from Irrlicht: http://irrlicht.sourceforge.net/
 //  */
-// kmVec2* kmVec2RotateBy(kmVec2* pOut, const kmVec2* pIn,
-//       const kmScalar degrees, const kmVec2* center)
+// kmVec3* kmVec3RotationToDirection(kmVec3* pOut, const kmVec3* pIn, const kmVec3* forwards)
 // {
-//    kmScalar x, y;
-//    const kmScalar radians = kmDegreesToRadians(degrees);
-//    const kmScalar cs = cosf(radians), sn = sinf(radians);
+//    const kmScalar xr = kmDegreesToRadians(pIn->x);
+//    const kmScalar yr = kmDegreesToRadians(pIn->y);
+//    const kmScalar zr = kmDegreesToRadians(pIn->z);
+//    const kmScalar cr = cos(xr), sr = sin(xr);
+//    const kmScalar cp = cos(yr), sp = sin(yr);
+//    const kmScalar cy = cos(zr), sy = sin(zr);
 //
-//    pOut->x = pIn->x - center->x;
-//    pOut->y = pIn->y - center->y;
+//    const kmScalar srsp = sr*sp;
+//    const kmScalar crsp = cr*sp;
 //
-//    x = pOut->x * cs - pOut->y * sn;
-//    y = pOut->x * sn + pOut->y * cs;
+//    const kmScalar pseudoMatrix[] = {
+//       (cp*cy), (cp*sy), (-sp),
+//       (srsp*cy-cr*sy), (srsp*sy+cr*cy), (sr*cp),
+//       (crsp*cy+sr*sy), (crsp*sy-sr*cy), (cr*cp)
+//    };
 //
-//    pOut->x = x + center->x;
-//    pOut->y = y + center->y;
+//    pOut->x = forwards->x * pseudoMatrix[0] +
+//              forwards->y * pseudoMatrix[3] +
+//              forwards->z * pseudoMatrix[6];
+//
+//    pOut->y = forwards->x * pseudoMatrix[1] +
+//              forwards->y * pseudoMatrix[4] +
+//              forwards->z * pseudoMatrix[7];
+//
+//    pOut->z = forwards->x * pseudoMatrix[2] +
+//              forwards->y * pseudoMatrix[5] +
+//              forwards->z * pseudoMatrix[8];
 //
 //    return pOut;
 // }
-//
-// /**
-//  * 	Returns the angle in degrees between the two vectors
-//  */
-// kmScalar kmVec2DegreesBetween(const kmVec2* v1, const kmVec2* v2) {
-// 	if(kmVec2AreEqual(v1, v2)) {
-// 		return 0.0;
-// 	}
-//
-// 	kmVec2 t1, t2;
-// 	kmVec2Normalize(&t1, v1);
-// 	kmVec2Normalize(&t2, v2);
-//
-// 	kmScalar cross = kmVec2Cross(&t1, &t2);
-// 	kmScalar dot = kmVec2Dot(&t1, &t2);
-//
-// 	/*
-// 	 * acos is only defined for -1 to 1. Outside the range we
-// 	 * get NaN even if that's just because of a floating point error
-// 	 * so we clamp to the -1 - 1 range
-// 	 */
-//
-// 	if(dot > 1.0) dot = 1.0;
-// 	if(dot < -1.0) dot = -1.0;
-//
-// 	return kmRadiansToDegrees(atan2(cross, dot));
-// }
-//
-// /**
-//  * Returns the distance between the two points
-//  */
-// kmScalar kmVec2DistanceBetween(const kmVec2* v1, const kmVec2* v2) {
-// 	kmVec2 diff;
-// 	kmVec2Subtract(&diff, v2, v1);
-// 	return fabs(kmVec2Length(&diff));
-// }
-// /**
-//  * Returns the point mid-way between two others
-//  */
-// kmVec2* kmVec2MidPointBetween(kmVec2* pOut, const kmVec2* v1, const kmVec2* v2) {
-// 	kmVec2 sum;
-//     kmVec2Add(&sum, v1, v2);
-//     pOut->x = sum.x / 2.0f;
-//     pOut->y = sum.y / 2.0f;
-//
-// 	return pOut;
-// }
-//
+
 // /**
 //  * Reflects a vector about a given surface normal. The surface normal is
 //  * assumed to be of unit length.
@@ -197,47 +242,6 @@ VectorType lerp(const VectorType a, const VectorType b, Scalar t)
 //       pOut->x += 360;
 //    if (pOut->x >= 360)
 //       pOut->x -= 360;
-//
-//    return pOut;
-// }
-//
-// /**
-//  * Builds a direction vector from input vector.
-//  * Input vector is assumed to be rotation vector composed from 3 Euler angle rotations, in
-//  degrees.
-//  * The forwards vector will be rotated by the input vector
-//  *
-//  * Code ported from Irrlicht: http://irrlicht.sourceforge.net/
-//  */
-// kmVec3* kmVec3RotationToDirection(kmVec3* pOut, const kmVec3* pIn, const kmVec3* forwards)
-// {
-//    const kmScalar xr = kmDegreesToRadians(pIn->x);
-//    const kmScalar yr = kmDegreesToRadians(pIn->y);
-//    const kmScalar zr = kmDegreesToRadians(pIn->z);
-//    const kmScalar cr = cos(xr), sr = sin(xr);
-//    const kmScalar cp = cos(yr), sp = sin(yr);
-//    const kmScalar cy = cos(zr), sy = sin(zr);
-//
-//    const kmScalar srsp = sr*sp;
-//    const kmScalar crsp = cr*sp;
-//
-//    const kmScalar pseudoMatrix[] = {
-//       (cp*cy), (cp*sy), (-sp),
-//       (srsp*cy-cr*sy), (srsp*sy+cr*cy), (sr*cp),
-//       (crsp*cy+sr*sy), (crsp*sy-sr*cy), (cr*cp)
-//    };
-//
-//    pOut->x = forwards->x * pseudoMatrix[0] +
-//              forwards->y * pseudoMatrix[3] +
-//              forwards->z * pseudoMatrix[6];
-//
-//    pOut->y = forwards->x * pseudoMatrix[1] +
-//              forwards->y * pseudoMatrix[4] +
-//              forwards->z * pseudoMatrix[7];
-//
-//    pOut->z = forwards->x * pseudoMatrix[2] +
-//              forwards->y * pseudoMatrix[5] +
-//              forwards->z * pseudoMatrix[8];
 //
 //    return pOut;
 // }

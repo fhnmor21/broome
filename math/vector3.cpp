@@ -26,7 +26,7 @@ NOTE: This file was modified to fit the Broome project
 */
 
 #include "vector3.hpp"
-#include "functions.hpp"
+#include "scalar_functions.hpp"
 
 namespace Broome
 {
@@ -118,20 +118,4 @@ Vector3& operator/=(Vector3& a, Scalar scalar)
   return a;
 }
 
-Scalar dot(const Vector3& a, const Vector3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
-
-Vector3 cross(const Vector3& a, const Vector3& b)
-{
-  return {
-      a.y * b.z - b.y * a.z, // x
-      a.z * b.x - b.z * a.x, // y
-      a.x * b.y - b.x * a.y  // z
-  };
-}
-
-Scalar lengthSq(const Vector3& a) { return dot(a, a); }
-
-Scalar length(const Vector3& a) { return std::sqrt(lengthSq(a)); }
-
-Vector3 normalize(const Vector3& a) { return a * (1.0f / length(a)); }
 } // namespace Broome

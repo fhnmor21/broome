@@ -28,7 +28,7 @@ NOTE: This file was modified to fit the Broome project
 */
 
 #include "vector4.hpp"
-#include "functions.hpp"
+#include "scalar_functions.hpp"
 
 namespace Broome
 {
@@ -128,16 +128,5 @@ Vector4& operator/=(Vector4& a, Scalar scalar)
 
   return a;
 }
-
-Scalar dot(const Vector4& a, const Vector4& b)
-{
-  return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
-}
-
-Scalar lengthSq(const Vector4& a) { return dot(a, a); }
-
-Scalar length(const Vector4& a) { return std::sqrt(lengthSq(a)); }
-
-Vector4 normalize(const Vector4& a) { return a * (1.0f / length(a)); }
 
 } // namespace Broome

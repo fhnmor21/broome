@@ -91,6 +91,22 @@ struct Vector3
   inline const Scalar& operator[](usize index) const { return data[index]; }
 };
 
+bool operator==(const Vector3& a, const Vector3& b);
+bool operator!=(const Vector3& a, const Vector3& b);
+Vector3 operator-(const Vector3& a);
+Vector3 operator+(const Vector3& a, const Vector3& b);
+Vector3 operator-(const Vector3& a, const Vector3& b);
+Vector3 operator*(const Vector3& a, f32 scalar);
+Vector3 operator/(const Vector3& a, f32 scalar);
+Vector3 operator*(const Vector3& a, const Vector3& b);
+Vector3 operator/(const Vector3& a, const Vector3& b);
+Vector3& operator+=(Vector3& a, const Vector3& b);
+Vector3& operator-=(Vector3& a, const Vector3& b);
+Vector3& operator*=(Vector3& a, f32 scalar);
+Vector3& operator/=(Vector3& a, f32 scalar);
+
+inline Vector3 operator*(f32 scalar, const Vector3& vector) { return vector * scalar; }
+
 using Colour3 = Vector3;
 using Dimension3 = Vector3;
 using Rotation3 = Vector3;
