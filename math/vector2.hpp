@@ -90,10 +90,13 @@ Vector2 operator*(const Vector2& a, const Vector2& b);
 Vector2 operator/(const Vector2& a, const Vector2& b);
 Vector2& operator+=(Vector2& a, const Vector2& b);
 Vector2& operator-=(Vector2& a, const Vector2& b);
-Vector2& operator*=(Vector2& a, f32 scalar);
-Vector2& operator/=(Vector2& a, f32 scalar);
+Vector2& operator*=(Vector2& a, const Vector2& b);
+Vector2& operator/=(Vector2& a, const Vector2& b);
 
-inline Vector2 operator*(f32 scalar, const Vector2& vector) { return vector * scalar; }
+inline Vector2 operator*(const f32 scalar, Vector2& vector) { return vector * scalar; }
+inline Vector2 operator/(const f32 scalar, Vector2& vector) { return vector / scalar; }
+inline Vector2& operator*=(const f32 scalar, Vector2& vector) { return vector * scalar; }
+inline Vector2& operator*=(const f32 scalar, Vector2& vector) { return vector / scalar; }
 
 using Dimension2 = Vector2;
 using Rotation2 = Vector2;

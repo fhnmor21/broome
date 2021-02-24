@@ -52,10 +52,10 @@ inline u8 hexChar2Val(const char* ch)
 void Html2Rgb(const ColourHtml& in, Colour3& out)
 {
   u32 rgb = 0;
-  for(u8 i = 0; i < 8; i++)
+  for(u8 i = 0; i < 6; i++)
   {
     rgb += hexChar2Val(&in.hexVal[i]);
-    rgb <<= 1;
+    rgb <<= 4;
   }
   out.b = static_cast< Scalar >(0xff & rgb);
   out.g = static_cast< Scalar >(0xff & (rgb >> 8));

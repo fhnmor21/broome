@@ -160,7 +160,6 @@ Scalar ln1p(Scalar x) // ln(1 + x)
   return std::log1p(x);
 }
 Scalar log2(Scalar x) { return std::log2(x); }
-
 Scalar log10(Scalar x) { return std::log10(x); }
 Scalar logBase(Scalar x, Scalar base) { return ln(x) * (1.0f / ln(base)); }
 

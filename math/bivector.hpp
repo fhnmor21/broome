@@ -22,45 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef FILENAME_HPP
-#define SCALAR_HPP
+#ifndef BIVECTOR_HPP
+#define BIVECTOR_HPP
 
-#include <cstddef>
-#include <cstdint>
-#include <float.h>
+//#include "FILENAME.hpp"
 
 namespace Broome
 {
 
-// basic numeric types
-using usize = std::size_t;
-using u8 = uint8_t;
-using u16 = uint16_t;
-using u32 = uint32_t;
-using u64 = uint64_t;
-using i8 = int8_t;
-using i16 = int16_t;
-using i32 = int32_t;
-using i64 = int64_t;
-using f32 = float;
-using f64 = double;
-
-#ifndef SCALAR
-#ifdef USE_DOUBLE_PRECISION
-#define SCALAR
-using Scalar = f64;
-#define Epsilon DBL_EPSILON;
-#else
-#define SCALAR
-using Scalar = f32;
-#define Epsilon FLT_EPSILON;
-#endif
-#endif
-
-using Radian = f32;
-using Degree = f32;
-using SemiCirc = f32; // 0.0 - 1.0 == half circle
-
 } // end namespace Broome
 
-#endif // SCALAR_HPP
+#endif // BIVECTOR_HPP

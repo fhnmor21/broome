@@ -16,6 +16,7 @@
 [ ] AABB / OBBox (?)
 [ ] Circle
 [ ] Quaternion
+[ ] BiVector
 
 # BACKBURNER:
 

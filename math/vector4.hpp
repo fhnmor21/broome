@@ -111,16 +111,19 @@ bool operator!=(const Vector4& a, const Vector4& b);
 Vector4 operator-(const Vector4& a);
 Vector4 operator+(const Vector4& a, const Vector4& b);
 Vector4 operator-(const Vector4& a, const Vector4& b);
-Vector4 operator*(const Vector4& a, f32 scalar);
+Vector4 operator*(const Vector4& a, const f32 scalar);
 Vector4 operator*(const Vector4& a, const Vector4& b);
 Vector4 operator/(const Vector4& a, const Vector4& b);
-Vector4 operator/(const Vector4& a, f32 scalar);
+Vector4 operator/(const Vector4& a, const f32 scalar);
 Vector4& operator+=(Vector4& a, const Vector4& b);
 Vector4& operator-=(Vector4& a, const Vector4& b);
-Vector4& operator*=(Vector4& a, f32 scalar);
-Vector4& operator/=(Vector4& a, f32 scalar);
+Vector4& operator*=(Vector4& a, const f32 scalar);
+Vector4& operator/=(Vector4& a, const f32 scalar);
 
-inline Vector4 operator*(f32 scalar, const Vector4& vector) { return vector * scalar; }
+inline Vector4 operator*(const f32 scalar, const Vector4& vector) { return vector * scalar; }
+inline Vector4 operator/(const f32 scalar, const Vector4& vector) { return vector / scalar; }
+inline Vector4& operator*=(const f32 scalar, const Vector4& vector) { return vector * scalar; }
+inline Vector4& operator/=(const f32 scalar, const Vector4& vector) { return vector / scalar; }
 
 using Colour4 = Vector4;
 

@@ -96,16 +96,19 @@ bool operator!=(const Vector3& a, const Vector3& b);
 Vector3 operator-(const Vector3& a);
 Vector3 operator+(const Vector3& a, const Vector3& b);
 Vector3 operator-(const Vector3& a, const Vector3& b);
-Vector3 operator*(const Vector3& a, f32 scalar);
-Vector3 operator/(const Vector3& a, f32 scalar);
+Vector3 operator*(const Vector3& a, const f32 scalar);
+Vector3 operator/(const Vector3& a, const f32 scalar);
 Vector3 operator*(const Vector3& a, const Vector3& b);
 Vector3 operator/(const Vector3& a, const Vector3& b);
 Vector3& operator+=(Vector3& a, const Vector3& b);
 Vector3& operator-=(Vector3& a, const Vector3& b);
-Vector3& operator*=(Vector3& a, f32 scalar);
-Vector3& operator/=(Vector3& a, f32 scalar);
+Vector3& operator*=(Vector3& a, const f32 scalar);
+Vector3& operator/=(Vector3& a, const f32 scalar);
 
-inline Vector3 operator*(f32 scalar, const Vector3& vector) { return vector * scalar; }
+inline Vector3 operator*(const f32 scalar, Vector3& vector) { return vector * scalar; }
+inline Vector3 operator/(const f32 scalar, Vector3& vector) { return vector / scalar; }
+inline Vector3& operator*=(const f32 scalar, Vector3& vector) { return vector * scalar; }
+inline Vector3& operator/=(const f32 scalar, Vector3& vector) { return vector / scalar; }
 
 using Colour3 = Vector3;
 using Dimension3 = Vector3;
